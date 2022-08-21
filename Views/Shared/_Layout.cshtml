@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        #footer {
+            bottom: 0;
+            margin-top: 2%;
+            text-align: center;
+            background-color: #fff;
+            padding: 7% 15%;
+        }
+
+
+        .footer-item {
+            margin: 1%;
+            color: black;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/3789dd4df1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="nav-link text-white">@Html.ActionLink("List Products", "Index", "Products")</li>
+                    <li class="nav-link text-white">@Html.ActionLink("Add Invoice", "Create", "PurchaseDetail")</li>
+                    <li class="nav-link text-white">@Html.ActionLink("Add Categories", "Create", "Categories")</li>
+                    <li class="nav-link text-white">@Html.ActionLink("List Categories", "Index", "Categories")</li>
+                    <li class="nav-link text-white">@Html.ActionLink("Add Supplier", "Create", "Suppliers")</li>
+                    <li class="nav-link text-white">@Html.ActionLink("List Suppliers", "Index", "Suppliers")</li>
+                    @if (Request.Cookies["Role"].Value == "admin")
+                    {
+                        <li class="nav-link text-white">@Html.ActionLink("Add User", "Create", "Users")</li>
+                        <li class="nav-link text-white">@Html.ActionLink("List Users", "Index", "Users")</li>
+                    }                
+                </ul>
+                <ul class="nav navbar-nav" style="color:white">
+                    @if (Request.Cookies["AuthCookie"] == null)
+                    {
+                        <li>@Html.ActionLink("Login", "Index", "Login")</li>
+                    }
+                    else
+                    {                       
+                        <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
+                        <li>
+                            <a href="#" style="color:white">
+                                (
+                                @Request.Cookies["AuthCookie"].Value
+                                )
+                            </a>
+                        </li>
+                    }
+
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer id="footer">
+            <i class="footer-item fa-brands fa-twitter"></i>
+            <i class="footer-item fa-brands fa-facebook-f"></i>
+            <i class="footer-item fa-brands fa-instagram"></i>
+            <i class="footer-item fa-solid fa-envelope"></i>
+            <p>&copy; Copyright @DateTime.Now.Year Atul & Rahul !</p>
+
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

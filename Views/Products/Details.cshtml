@@ -1,0 +1,75 @@
+﻿@model prjGroceryStore4.product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pro_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pro_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pro_barcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pro_barcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pro_location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pro_location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pro_quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pro_quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.p_description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.p_description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.p_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.p_price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.category.cat_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category.cat_name)
+        </dd>
+        <dd>
+            <img src="@Url.Content(Model.pro_image)" width="150" height="250" />
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.pro_id }, new { @class = "link-success" }) 
+</p>

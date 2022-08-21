@@ -1,0 +1,49 @@
+﻿@model IEnumerable<prjGroceryStore4.supplier>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Suppliers</h2>
+
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.sup_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sup_address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sup_phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sup_balance)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.sup_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sup_address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sup_phone)
+        </td>
+        <td>
+           <b>$</b> @Html.DisplayFor(modelItem => item.sup_balance)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.sup_id }, new { @class = "link-success" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.sup_id }, new { @class = "link-success" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.sup_id }, new { @class = "link-danger" })
+        </td>
+    </tr>
+}
+
+</table>

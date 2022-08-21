@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="inventoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cat_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="cat_status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pro_name" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="pro_barcode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pro_location" Type="nvarchar" MaxLength="50" />
+          <Property Name="pro_quantity" Type="int" Nullable="false" />
+          <Property Name="p_description" Type="varchar" MaxLength="200" />
+          <Property Name="p_price" Type="money" />
+          <Property Name="pro_catID" Type="int" />
+          <Property Name="pro_image" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="purchase">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="p_date" Type="date" Nullable="false" />
+          <Property Name="p_suppId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="purchaseDetails">
+          <Key>
+            <PropertyRef Name="pd_id" />
+          </Key>
+          <Property Name="pd_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pd_purchaseId" Type="bigint" Nullable="false" />
+          <Property Name="pd_proId" Type="int" Nullable="false" />
+          <Property Name="pd_quantity" Type="int" Nullable="false" />
+          <Property Name="pd_buyingPrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="r_id" />
+          </Key>
+          <Property Name="r_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="r_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="r_status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="suppliers">
+          <Key>
+            <PropertyRef Name="sup_id" />
+          </Key>
+          <Property Name="sup_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sup_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sup_address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sup_phone" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="sup_balance" Type="int" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="u_username" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="u_password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="u_phone" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="u_email" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="u_status" Type="tinyint" Nullable="false" />
+          <Property Name="u_roleId" Type="int" Nullable="false" />
+          <Property Name="u_st_address" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="u_city" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__products__pro_ca__1BC821DD">
+          <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="pro_catID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__purchase__p_supp__6383C8BA">
+          <End Role="suppliers" Type="Self.suppliers" Multiplicity="1" />
+          <End Role="purchase" Type="Self.purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="suppliers">
+              <PropertyRef Name="sup_id" />
+            </Principal>
+            <Dependent Role="purchase">
+              <PropertyRef Name="p_suppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__purchaseD__pd_pu__66603565">
+          <End Role="purchase" Type="Self.purchase" Multiplicity="1" />
+          <End Role="purchaseDetails" Type="Self.purchaseDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="purchase">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="purchaseDetails">
+              <PropertyRef Name="pd_purchaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__u_roleId__4CA06362">
+          <End Role="roles" Type="Self.roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="r_id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="u_roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_purchaseDetails_products">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="purchaseDetails" Type="Self.purchaseDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="purchaseDetails">
+              <PropertyRef Name="pd_proId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="st_getRoleuser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="st_getRoleuserNew" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="st_getUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="inventoryDBModelStoreContainer">
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="purchase" EntityType="Self.purchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="purchaseDetails" EntityType="Self.purchaseDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="suppliers" EntityType="Self.suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__products__pro_ca__1BC821DD" Association="Self.FK__products__pro_ca__1BC821DD">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__purchase__p_supp__6383C8BA" Association="Self.FK__purchase__p_supp__6383C8BA">
+            <End Role="suppliers" EntitySet="suppliers" />
+            <End Role="purchase" EntitySet="purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__purchaseD__pd_pu__66603565" Association="Self.FK__purchaseD__pd_pu__66603565">
+            <End Role="purchase" EntitySet="purchase" />
+            <End Role="purchaseDetails" EntitySet="purchaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__u_roleId__4CA06362" Association="Self.FK__users__u_roleId__4CA06362">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_purchaseDetails_products" Association="Self.FK_purchaseDetails_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="purchaseDetails" EntitySet="purchaseDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="inventoryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cat_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cat_status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="products" Relationship="inventoryDBModel.FK__products__pro_ca__1BC821DD" FromRole="category" ToRole="product" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="r_id" />
+          </Key>
+          <Property Name="r_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="r_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="r_status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK__users__u_roleId__4CA06362" FromRole="roles" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_username" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_status" Type="Byte" Nullable="false" />
+          <Property Name="u_roleId" Type="Int32" Nullable="false" />
+          <Property Name="u_st_address" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_city" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="role" Relationship="Self.FK__users__u_roleId__4CA06362" FromRole="users" ToRole="roles" />
+        </EntityType>
+        <Association Name="FK__users__u_roleId__4CA06362">
+          <End Role="roles" Type="Self.role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="r_id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="u_roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="inventoryDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="roles" EntityType="Self.role" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK__users__u_roleId__4CA06362" Association="Self.FK__users__u_roleId__4CA06362">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <FunctionImport Name="st_getRoleuser" ReturnType="Collection(String)">
+          <Parameter Name="user" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="st_getRoleuserNew" ReturnType="Collection(String)">
+          <Parameter Name="user" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="products" EntityType="inventoryDBModel.product" />
+          <EntitySet Name="purchases" EntityType="inventoryDBModel.purchase" />
+          <EntitySet Name="purchaseDetails" EntityType="inventoryDBModel.purchaseDetail" />
+          <AssociationSet Name="FK__purchaseD__pd_pu__66603565" Association="inventoryDBModel.FK__purchaseD__pd_pu__66603565">
+            <End Role="purchase" EntitySet="purchases" />
+            <End Role="purchaseDetail" EntitySet="purchaseDetails" />
+          </AssociationSet>
+          <EntitySet Name="suppliers" EntityType="inventoryDBModel.supplier" />
+          <AssociationSet Name="FK__purchase__p_supp__6383C8BA" Association="inventoryDBModel.FK__purchase__p_supp__6383C8BA">
+            <End Role="supplier" EntitySet="suppliers" />
+            <End Role="purchase" EntitySet="purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_purchaseDetails_products" Association="inventoryDBModel.FK_purchaseDetails_products">
+            <End Role="product" EntitySet="products" />
+            <End Role="purchaseDetail" EntitySet="purchaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__products__pro_ca__1BC821DD" Association="inventoryDBModel.FK__products__pro_ca__1BC821DD">
+            <End Role="category" EntitySet="categories" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <FunctionImport Name="st_getUserId" ReturnType="Collection(Int32)">
+          <Parameter Name="user" Mode="In" Type="String" />
+          </FunctionImport>
+          </EntityContainer>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pro_name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="pro_barcode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pro_location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pro_quantity" Type="Int32" Nullable="false" />
+          <Property Name="p_description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="p_price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="purchaseDetails" Relationship="inventoryDBModel.FK_purchaseDetails_products" FromRole="product" ToRole="purchaseDetail" />
+          <Property Name="pro_catID" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="inventoryDBModel.FK__products__pro_ca__1BC821DD" FromRole="product" ToRole="category" />
+          <Property Name="pro_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="purchase">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="p_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="p_suppId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="purchaseDetails" Relationship="inventoryDBModel.FK__purchaseD__pd_pu__66603565" FromRole="purchase" ToRole="purchaseDetail" />
+          <NavigationProperty Name="supplier" Relationship="inventoryDBModel.FK__purchase__p_supp__6383C8BA" FromRole="purchase" ToRole="supplier" />
+        </EntityType>
+        <EntityType Name="purchaseDetail">
+          <Key>
+            <PropertyRef Name="pd_id" />
+          </Key>
+          <Property Name="pd_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pd_purchaseId" Type="Int64" Nullable="false" />
+          <Property Name="pd_proId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="purchase" Relationship="inventoryDBModel.FK__purchaseD__pd_pu__66603565" FromRole="purchaseDetail" ToRole="purchase" />
+          <NavigationProperty Name="product" Relationship="inventoryDBModel.FK_purchaseDetails_products" FromRole="purchaseDetail" ToRole="product" />
+          <Property Name="pd_quantity" Type="Int32" Nullable="false" />
+          <Property Name="pd_buyingPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <Association Name="FK__purchaseD__pd_pu__66603565">
+          <End Type="inventoryDBModel.purchase" Role="purchase" Multiplicity="1" />
+          <End Type="inventoryDBModel.purchaseDetail" Role="purchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="purchase">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="purchaseDetail">
+              <PropertyRef Name="pd_purchaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="sup_id" />
+          </Key>
+          <Property Name="sup_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sup_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="sup_address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="sup_phone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="sup_balance" Type="Int32" />
+          <NavigationProperty Name="purchases" Relationship="inventoryDBModel.FK__purchase__p_supp__6383C8BA" FromRole="supplier" ToRole="purchase" />
+        </EntityType>
+        <Association Name="FK__purchase__p_supp__6383C8BA">
+          <End Type="inventoryDBModel.supplier" Role="supplier" Multiplicity="1" />
+          <End Type="inventoryDBModel.purchase" Role="purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="sup_id" />
+            </Principal>
+            <Dependent Role="purchase">
+              <PropertyRef Name="p_suppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_purchaseDetails_products">
+          <End Type="inventoryDBModel.product" Role="product" Multiplicity="1" />
+          <End Type="inventoryDBModel.purchaseDetail" Role="purchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="purchaseDetail">
+              <PropertyRef Name="pd_proId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__products__pro_ca__1BC821DD">
+          <End Type="inventoryDBModel.category" Role="category" Multiplicity="0..1" />
+          <End Type="inventoryDBModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="pro_catID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="inventoryDBModelStoreContainer" CdmEntityContainer="inventoryDBEntities">
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="inventoryDBModel.category">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+                <ScalarProperty Name="cat_status" ColumnName="cat_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="inventoryDBModel.role">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="r_id" ColumnName="r_id" />
+                <ScalarProperty Name="r_name" ColumnName="r_name" />
+                <ScalarProperty Name="r_status" ColumnName="r_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="inventoryDBModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="u_name" ColumnName="u_name" />
+                <ScalarProperty Name="u_username" ColumnName="u_username" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="u_phone" ColumnName="u_phone" />
+                <ScalarProperty Name="u_email" ColumnName="u_email" />
+                <ScalarProperty Name="u_status" ColumnName="u_status" />
+                <ScalarProperty Name="u_roleId" ColumnName="u_roleId" />
+                <ScalarProperty Name="u_st_address" ColumnName="u_st_address" />
+                <ScalarProperty Name="u_city" ColumnName="u_city" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="st_getRoleuser" FunctionName="inventoryDBModel.Store.st_getRoleuser" />
+          <FunctionImportMapping FunctionImportName="st_getRoleuserNew" FunctionName="inventoryDBModel.Store.st_getRoleuserNew" />
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="inventoryDBModel.product">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="pro_image" ColumnName="pro_image" />
+                <ScalarProperty Name="pro_catID" ColumnName="pro_catID" />
+                <ScalarProperty Name="p_price" ColumnName="p_price" />
+                <ScalarProperty Name="p_description" ColumnName="p_description" />
+                <ScalarProperty Name="pro_quantity" ColumnName="pro_quantity" />
+                <ScalarProperty Name="pro_location" ColumnName="pro_location" />
+                <ScalarProperty Name="pro_barcode" ColumnName="pro_barcode" />
+                <ScalarProperty Name="pro_name" ColumnName="pro_name" />
+                <ScalarProperty Name="pro_id" ColumnName="pro_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="purchases">
+            <EntityTypeMapping TypeName="inventoryDBModel.purchase">
+              <MappingFragment StoreEntitySet="purchase">
+                <ScalarProperty Name="p_suppId" ColumnName="p_suppId" />
+                <ScalarProperty Name="p_date" ColumnName="p_date" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="purchaseDetails">
+            <EntityTypeMapping TypeName="inventoryDBModel.purchaseDetail">
+              <MappingFragment StoreEntitySet="purchaseDetails">
+                <ScalarProperty Name="pd_buyingPrice" ColumnName="pd_buyingPrice" />
+                <ScalarProperty Name="pd_quantity" ColumnName="pd_quantity" />
+                <ScalarProperty Name="pd_proId" ColumnName="pd_proId" />
+                <ScalarProperty Name="pd_purchaseId" ColumnName="pd_purchaseId" />
+                <ScalarProperty Name="pd_id" ColumnName="pd_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suppliers">
+            <EntityTypeMapping TypeName="inventoryDBModel.supplier">
+              <MappingFragment StoreEntitySet="suppliers">
+                <ScalarProperty Name="sup_balance" ColumnName="sup_balance" />
+                <ScalarProperty Name="sup_phone" ColumnName="sup_phone" />
+                <ScalarProperty Name="sup_address" ColumnName="sup_address" />
+                <ScalarProperty Name="sup_name" ColumnName="sup_name" />
+                <ScalarProperty Name="sup_id" ColumnName="sup_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="st_getUserId" FunctionName="inventoryDBModel.Store.st_getUserId" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

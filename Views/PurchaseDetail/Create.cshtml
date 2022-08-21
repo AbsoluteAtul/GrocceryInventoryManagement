@@ -1,0 +1,105 @@
+﻿@model prjGroceryStore4.Models.PurchaseViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-ui-1.13.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<link rel="stylesheet" href="~/Content/Site.css">
+<h2>Purchase</h2>
+
+<div class="alert-warning alert-danger">@ViewBag.Error</div>
+
+<form id="myForm">
+    <br />
+    <br />
+    <b>@Html.Label("Date")</b>
+    @Html.TextBoxFor(model => model.PurchaseDate, new { @type = "date" })
+    @Html.ValidationMessageFor(model => model.PurchaseDate, "", new { @class = "error" })
+    <br /><br />
+    <b>@Html.Label("Suppliers")</b>
+
+
+    @Html.DropDownListFor(model => model.SupplierID, ViewBag.suppList as SelectList, "--select--", new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "error" })
+
+    <br />
+
+    <table>
+
+        <tr>
+            <th>Product</th>
+            
+            <td>
+                <br />
+                @Html.DropDownListFor(model => model.ProductID, ViewBag.proList as SelectList, "--select--", new { @class = "form-control", @placeholder = "Name" })
+                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error" })<br />
+            </td>
+
+        </tr>
+      
+        <tr>
+            <th>Quantity (per boxes)</th>
+            <td>
+                @Html.TextBoxFor(model => model.ProductQuantity, new { @class = "form-control", @placeholder = "Quantity" })
+                @Html.ValidationMessageFor(model => model.ProductQuantity, "", new { @class = "error" })
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <th>Buying price </th>
+            <td>
+                $@Html.TextBoxFor(model => model.ProductBuyingPrice, new { @class = "form-control", @placeholder = "Price" })
+                @Html.ValidationMessageFor(model => model.ProductBuyingPrice, "", new { @class = "error" })
+                <br />
+            </td>
+        </tr>
+       
+    </table>
+    <br />
+    <input type="reset" value="Submit" class="btn btn-block btn-primary" id="btnSubmit" />
+
+</form>
+<div class="alert-warning alert-danger">@ViewBag.Error</div>
+<div style="text-align:center;display:none" id="loading">
+    <img src="~/Content/giphy.gif" width="150" />
+</div>
+
+<script>
+    $(document).ready(function () {
+        debugger
+
+        $("#btnSubmit").click(function () {
+            var data = $("#myForm").serialize();
+            $("#loading").show();
+            $.ajax({
+                type: "POST",
+                url: "/PurchaseDetail/Create",
+                data: data,
+                success: function (response) {
+                    $("#loading").hide();
+                    alert("Added");
+                }
+            })
+
+        })
+    })
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changemonth: true,
+            changeyear: true
+        });
+    });
+</script>
+
+
+
+
+
+

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<prjGroceryStore4.product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_NewLayoutPage.cshtml";
+}
+
+<link rel='stylesheet' type='text/css' media='screen' href='~/Content/themes/style.css'>
+<h2>Products</h2>
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+@Html.TextBox("searching",null, htmlAttributes: new { @class = "form-control" })<input type="submit" class="btn btn-info" value="Search">
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.pro_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pro_barcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pro_location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pro_quantity)
+            </th>
+            <th>
+                Comments
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.p_price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.category.cat_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pro_image)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="8">
+                    <div class="alert alert-danger">
+                        <strong>No Match!</strong> 
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.pro_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.pro_barcode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.pro_location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.pro_quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.p_description)
+                    </td>
+                    <td>
+                        <b>$</b> @Html.DisplayFor(modelItem => item.p_price)
+                    </td>
+                    <td>
+                       @Html.DisplayFor(modelItem => item.category.cat_name)
+                    </td>
+                    <td>
+                        @*<img class="img-responsive" src="@Url.Content(Model.pro_image)" alt="">*@
+                        <img src="@Html.DisplayFor(modelItem => item.pro_image)" width="100" height="60"/>
+                        @*@Html.DisplayFor(modelItem => item.pro_image)*@
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.pro_id }, new { @class = "link-success" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.pro_id }, new { @class = "link-success" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.pro_id }, new { @class = "link-danger" })
+                    </td>
+                </tr>
+            }
+
+        }
+
+</table>

@@ -1,0 +1,240 @@
+﻿/*html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+    background-color: antiquewhite;
+}*/
+/*//////////////////////////////////////////////// Login page///////////////////////////// */
+.signup {
+    background-color: #1da1f2;
+    color: white;
+    font-weight: bold;
+    margin: 5% 3% 5% 0;
+    width: 50%;
+    border-radius: 99px;
+}
+
+.loginbtn {
+    color: #1da1f2;
+    font-weight: bold;
+    margin: 5% 3% 5% 0;
+    width: 50%;
+    border-color: rgb(207, 217, 222);
+    border-radius: 99px;
+}
+
+.fa-twitter {
+    color: #1da1f2;
+}
+
+.title-image {
+    width: 120%;
+    z-index: 0;
+    position: absolute;
+    right: 0%;
+}
+
+.title {
+    margin-top: 10%;
+    margin-left: 65%;
+}
+/*//////////////////////////CREATE USER PAGE////////////////*/
+
+/*.registerform {
+    border-radius: 59px;
+    text-align: center;
+    margin: 10% 30%;
+    background-color: black
+}*/
+
+/*.editform {
+    background-color: rosybrown;
+    text-align: center;
+    border-radius: 50px;
+    border-block:double;
+    border-width: 10px;
+    width: 80%;
+    margin-bottom: 20%;
+    font-display:block;
+        font-style: oblique;
+    font-size:20px;*/
+/*}
+
+
+.form-group {
+    margin: 10px 70px;
+    width: 70%;
+}*/
+
+/*/////////////////////////////////////////////////////SIDEBAR/////////////////////////////////////////////////////////*/
+
+.brand {
+    height: 28px;
+    filter: invert(46%) sepia(99%) saturate(1449%) hue-rotate(176deg) brightness(100%) contrast(91%);
+    padding: 10px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 275px auto 350px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.layout__main {
+    width: 90%;
+}
+
+.layout__right-sidebar {
+    position: fixed;
+    width: 350px;
+}
+
+.sidebar-menu {
+    position: fixed;
+}
+
+.sidebar-menu__item {
+    font-size: 19px;
+    color: #0F141A;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    padding: 10px;
+}
+
+    .sidebar-menu__item:hover {
+        background: rgba(106, 22, 66, 0.8);
+        color: #1da0f2;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+.sidebar-menu__item--active {
+    color: #1da0f2;
+}
+
+.sidebar-menu__item-icon {
+    height: 26px;
+    margin-right: 20px;
+}
+
+.sidebar-menu__item--active .sidebar-menu__item-icon {
+    filter: invert(67%) sepia(60%) saturate(4956%) hue-rotate(176deg) brightness(95%) contrast(99%);
+}
+
+/*/////////////////////////// LOGIN MODAL //////////////////////////*/
+
+input[type=text],
+input[type=password] {
+    width: 80%;
+    padding: 12px 20px;
+    margin: 18px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.button {
+    font-weight: bold;
+    margin: 5% 3% 5% 0;
+    width: 80%;
+    border-radius: 99px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.logincontainer {
+    text-align: center;
+    padding: 100px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 60%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto;
+    border: 1px solid #888;
+    width: 45%;
+    border-radius: 59px;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+}
+
+/*///////////////////////////////////////Product Search Bar/////////////////////////////////////////////////////*/
+.container {
+    margin-top: 200px;
+}
+
+.btn:hover {
+    color: #fff;
+}
+
+.input-text:focus {
+    box-shadow: 0px 0px 0px;
+    border-color: #f8c146;
+    outline: 0px;
+}
+
+/*/////////FOOTER///////////*/
+
+#footer {
+    bottom: 0;
+    margin-top: 15%;
+    text-align: center;
+    background-color: #fff;
+    
+}
+
+
+.footer-item {
+    margin: 1%;
+    color: black;
+}/*///////////////////////////////////////////////////////////DROP DOWN MENU/////////////////////////////////*/

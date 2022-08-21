@@ -1,0 +1,80 @@
+﻿@model prjGroceryStore4.product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.pro_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pro_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pro_barcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pro_barcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pro_location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pro_location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pro_quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pro_quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.p_description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.p_description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.p_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.p_price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.category.cat_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category.cat_name)
+        </dd>
+        @*<dd>
+            <img src="@Url.Content(Model.pro_image)" width="150" height="250" />
+        </dd>*@
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |        
+        </div>
+    }
+</div>
